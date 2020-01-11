@@ -72,6 +72,16 @@ const frameIn = [
         name: 'redirect',
         hidden: true,
         component: _import('system/function/redirect')
+      },
+      // 商家列表
+      {
+        path: 'businessList',
+        name: 'businessList',
+        meta: {
+          title: '商家列表',
+          auth: true
+        },
+        component: _import('business/list/businessList')
       }
     ]
   }
