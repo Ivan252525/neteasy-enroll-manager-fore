@@ -16,6 +16,9 @@
         :data="data"
         :loading="loading"
         :pagination="pagination"
+        :rowHandle="rowHandle"
+        @custom-emit-1="showEditBusiness"
+        @row-remove="removeBusiness"
         @dialog-cancel="handleDialogCancel"
         @pagination-current-change="paginationCurrentChange"/>
     </div>
@@ -51,7 +54,7 @@
 </template>
 
 <script>
-import { BusinessListApi } from '@/api/business.js'
+import { BusinessListApi, BusinessAddApi, BusinessGetApi, BusinessEditApi, BusinessRemoveApi } from '@/api/business.js'
 import util from '@/libs/util'
 import BusinessListImage from './components/BusinessListImage'
 // import AddOrUpdate from '../addOrUpdata/addOrUpdateBusiness'
@@ -62,6 +65,7 @@ export default {
   // },
   data () {
     return {
+      businessName: '',
       form: {
         id: null,
         businessName: '',
@@ -93,6 +97,25 @@ export default {
           key: 'createTime'
         }
       ],
+      rowHandle: {
+        custom: [
+          {
+            text: '修改',
+            icon: 'el-icon-edit',
+            type: 'info',
+            size: 'small',
+            emit: 'custom-emit-1'
+          }
+        ],
+        remove: {
+          icon: 'el-icon-delete',
+          size: 'small',
+          fixed: 'right',
+          confirm: true,
+          confirmTitle: '提示',
+          confirmText: '删除后该商家下所有活动将自动删除，确定删除商家？'
+        }
+      },
       data: [],
       options: {
         stripe: true
@@ -170,7 +193,65 @@ export default {
       }
     },
     saveOrUpdate () {
-      console.log(this.form)
+      if (!this.form.id) {
+        this.loading = true
+        BusinessAddApi({
+          businessName: this.form.businessName,
+          businessLogo: this.form.businessLogo,
+          businessAbout: this.form.businessAbout
+        }).then(res => {
+          this.loading = false
+          this.addOrUpdateVisible = false
+          this.pagination.currentPage = 1
+          this.fetchData()
+        }).catch(err => {
+          console.log('err', err)
+          this.loading = false
+        })
+      } else {
+        BusinessEditApi({
+          businessId: this.form.id,
+          businessName: this.form.businessName,
+          businessLogo: this.form.businessLogo,
+          businessAbout: this.form.businessAbout
+        }).then(res => {
+          this.addOrUpdateVisible = false
+          this.fetchData()
+        }).catch(err => {
+          console.log('err', err)
+          this.loading = false
+        })
+      }
+    },
+    showEditBusiness ({ index, row }) {
+      this.addOrUpdateVisible = true
+      this.dialogTitle = '修改'
+      let businessId = row.id
+      BusinessGetApi(businessId)
+        .then(res => {
+          console.log(res)
+          this.form.id = res.id
+          this.form.businessName = res.businessName
+          this.form.businessLogo = res.logo
+          this.form.businessAbout = res.businessAbout
+        }).catch(err => {
+          console.log('err', err)
+          this.loading = false
+        })
+    },
+    removeBusiness ({ index, row }, done) {
+      let businessId = row.id
+      BusinessRemoveApi(businessId)
+        .then(res => {
+          this.$message({
+            message: '删除成功',
+            type: 'success'
+          })
+          done()
+        }).catch(err => {
+          console.log('err', err)
+          this.loading = false
+        })
     }
   }
 }

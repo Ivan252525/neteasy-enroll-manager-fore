@@ -11,3 +11,45 @@ export function BusinessListApi (data) {
     data
   })
 }
+
+export function BusinessAddApi (data) {
+  return request({
+    url: '/manager/business/business/add',
+    method: 'post',
+    headers: {
+      'token': util.cookies.get('token')
+    },
+    data
+  })
+}
+
+export function BusinessGetApi (businessId) {
+  return request({
+    url: '/manager/business/business/info/' + businessId,
+    method: 'get',
+    headers: {
+      'token': util.cookies.get('token')
+    }
+  })
+}
+
+export function BusinessEditApi (data) {
+  return request({
+    url: '/manager/business/business/edit',
+    method: 'post',
+    headers: {
+      'token': util.cookies.get('token')
+    },
+    data
+  })
+}
+
+export function BusinessRemoveApi (businessId) {
+  return request({
+    url: '/manager/business/business/remove/' + businessId,
+    method: 'post',
+    headers: {
+      'token': util.cookies.get('token')
+    }
+  })
+}
