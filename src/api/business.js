@@ -53,3 +53,13 @@ export function BusinessRemoveApi (businessId) {
     }
   })
 }
+
+export function BusinessAllApi () {
+  return request({
+    url: '/manager/business/business/all',
+    method: 'get',
+    headers: {
+      'token': util.cookies.get('token')
+    }
+  })
+}

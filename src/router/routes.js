@@ -82,6 +82,16 @@ const frameIn = [
           auth: true
         },
         component: _import('business/list/businessList')
+      },
+      // 活动列表
+      {
+        path: 'activityList',
+        name: 'activityList',
+        meta: {
+          title: '活动列表',
+          auth: true
+        },
+        component: _import('activity/activityList')
       }
     ]
   }

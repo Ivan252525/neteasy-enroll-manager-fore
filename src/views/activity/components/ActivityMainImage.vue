@@ -1,5 +1,5 @@
 <template>
-  <el-image :src="scope.row.businessLogo" style="width: 70px; height: 70px"></el-image>
+  <el-image :src="scope.row.mainImage" style="width: 86px; height: 50px"></el-image>
 </template>
 
 <script>

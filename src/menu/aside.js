@@ -7,5 +7,12 @@ export default [
     children: [
       { path: '/businessList', title: '商家列表' }
     ]
+  },
+  {
+    title: '活动管理',
+    icon: 'folder-o',
+    children: [
+      { path: '/activityList', title: '活动列表' }
+    ]
   }
 ]

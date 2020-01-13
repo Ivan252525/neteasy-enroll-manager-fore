@@ -1,5 +1,5 @@
 <template>
-  <el-image :src="scope.row.businessLogo" style="width: 70px; height: 70px"></el-image>
+  <el-tag :type="scope.row.state === 1 ? 'success': 'danger'">{{scope.row.state === 1 ? '上架': '下架'}}</el-tag>
 </template>
 
 <script>

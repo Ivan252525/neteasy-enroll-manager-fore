@@ -2,7 +2,7 @@
   <d2-container>
     <template slot="header">
       <el-row>
-        <el-col :span="6">
+        <el-col :span="6" style="display: flex">
           <el-input v-model="businessName" placeholder="请输入商家名称..."/>
         </el-col>
         <el-button type="primary" style="margin-left: 5px" @click="searchList">搜索</el-button>
