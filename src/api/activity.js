@@ -11,3 +11,24 @@ export function ActivityListApi (data) {
     data
   })
 }
+
+export function ActivityAddApi (data) {
+  return request({
+    url: '/manager/activity/activity/add',
+    method: 'post',
+    headers: {
+      'token': util.cookies.get('token')
+    },
+    data
+  })
+}
+
+export function ActivityGetApi (activityId) {
+  return request({
+    url: '/manager/activity/activity/get/' + activityId,
+    method: 'get',
+    headers: {
+      'token': util.cookies.get('token')
+    }
+  })
+}
