@@ -36,6 +36,7 @@
         :pagination="pagination"
         :rowHandle="rowHandle"
         @custom-emit-1="showEditActivity"
+        @custom-emit-2="downloadExcel"
         @pagination-current-change="paginationCurrentChange"/>
     </div>
     <el-dialog :title="dialogTitle" :visible.sync="addOrUpdateVisible">
@@ -276,10 +277,10 @@ export default {
           title: '报名人数',
           key: 'enrollNum'
         },
-        {
-          title: '创建时间',
-          key: 'createTime'
-        },
+        // {
+        //   title: '创建时间',
+        //   key: 'createTime'
+        // },
         {
           title: '状态',
           key: 'state',
@@ -296,6 +297,12 @@ export default {
             type: 'info',
             size: 'small',
             emit: 'custom-emit-1'
+          },
+          {
+            text: '下载报名名单',
+            type: 'info',
+            size: 'small',
+            emit: 'custom-emit-2'
           }
         ]
       },
@@ -580,6 +587,9 @@ export default {
         console.log('err', err)
         this.loading = false
       })
+    },
+    downloadExcel () {
+      console.log('sdfhlisufliuwehfiuewhfoi')
     }
   }
 }
