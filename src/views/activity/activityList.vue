@@ -588,8 +588,9 @@ export default {
         this.loading = false
       })
     },
-    downloadExcel () {
-      console.log('sdfhlisufliuwehfiuewhfoi')
+    downloadExcel ({ index, row }) {
+      // let activityId = row.id
+      // window.location.href = ''
     }
   }
 }
