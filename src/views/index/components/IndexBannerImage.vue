@@ -1,7 +1,5 @@
 <template>
-  <el-tag :type="scope.row.enrollState === 1 ? 'info': (scope.row.enrollState === 2 ? 'success' : 'danger')">
-    {{scope.row.enrollState === 1 ? '未开始': (scope.row.enrollState === 2 ? '报名中' : '已结束')}}
-  </el-tag>
+  <el-image :src="scope.row.imageUrl" style="width: 200px; height: 75px"></el-image>
 </template>
 
 <script>

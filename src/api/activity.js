@@ -32,3 +32,34 @@ export function ActivityGetApi (activityId) {
     }
   })
 }
+
+export function ActivityEditApi (data) {
+  return request({
+    url: '/manager/activity/activity/edit',
+    method: 'post',
+    headers: {
+      'token': util.cookies.get('token')
+    },
+    data
+  })
+}
+
+export function ActivityRemoveApi (activityId) {
+  return request({
+    url: '/manager/activity/activity/remove/' + activityId,
+    method: 'post',
+    headers: {
+      'token': util.cookies.get('token')
+    }
+  })
+}
+
+export function ActivityAllApi () {
+  return request({
+    url: '/manager/activity/activity/all',
+    method: 'get',
+    headers: {
+      'token': util.cookies.get('token')
+    }
+  })
+}

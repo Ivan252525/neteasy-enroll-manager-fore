@@ -92,6 +92,34 @@ const frameIn = [
           auth: true
         },
         component: _import('activity/activityList')
+      },
+      // 首页管理
+      {
+        path: 'indexBannerManager',
+        name: 'indexBannerManager',
+        meta: {
+          title: 'banner管理',
+          auth: true
+        },
+        component: _import('index/index-banner-manager')
+      },
+      {
+        path: 'indexActivityManager',
+        name: 'indexActivityManager',
+        meta: {
+          title: '首页活动管理',
+          auth: true
+        },
+        component: _import('index/index-activity-manager')
+      },
+      {
+        path: 'indexBusinessManager',
+        name: 'indexBusinessManager',
+        meta: {
+          title: '首页商家管理',
+          auth: true
+        },
+        component: _import('index/index-business-manager')
       }
     ]
   }

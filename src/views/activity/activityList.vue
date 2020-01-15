@@ -37,6 +37,7 @@
         :rowHandle="rowHandle"
         @custom-emit-1="showEditActivity"
         @custom-emit-2="downloadExcel"
+        @row-remove="removeActivity"
         @pagination-current-change="paginationCurrentChange"/>
     </div>
     <el-dialog :title="dialogTitle" :visible.sync="addOrUpdateVisible">
@@ -187,7 +188,7 @@
 </template>
 
 <script>
-import { ActivityListApi, ActivityAddApi, ActivityGetApi } from '@/api/activity.js'
+import { ActivityListApi, ActivityAddApi, ActivityGetApi, ActivityEditApi, ActivityRemoveApi } from '@/api/activity.js'
 import { BusinessAllApi } from '@/api/business.js'
 import ActivityMainImage from './components/ActivityMainImage'
 import ActivityState from './components/ActivityState'
@@ -283,28 +284,40 @@ export default {
         // },
         {
           title: '状态',
-          key: 'state',
+          key: 'enrollState',
           component: {
             name: ActivityState
           }
         }
       ],
       rowHandle: {
+        width: '300px',
         custom: [
           {
             text: '修改',
-            icon: 'el-icon-edit',
-            type: 'info',
-            size: 'small',
+            // icon: 'el-icon-edit',
+            type: 'primary',
+            size: 'mini',
             emit: 'custom-emit-1'
           },
           {
-            text: '下载报名名单',
-            type: 'info',
-            size: 'small',
-            emit: 'custom-emit-2'
+            text: '报名excel',
+            type: 'primary',
+            size: 'mini',
+            emit: 'custom-emit-2',
+            disabled: function (index, row) {
+              return row.enrollNum === 0
+            }
           }
-        ]
+        ],
+        remove: {
+          // icon: 'el-icon-delete',
+          size: 'mini',
+          // fixed: 'right',
+          confirm: true,
+          confirmTitle: '提示',
+          confirmText: '确认删除？'
+        }
       },
       data: [],
       options: {
@@ -521,6 +534,7 @@ export default {
             })
           }
           let data = {
+            id: this.form.id,
             businessId: this.form.businessId,
             title: this.form.title,
             mainImage: this.form.mainImage,
@@ -536,14 +550,26 @@ export default {
             formItems: formItems
           }
           console.log(data)
-          ActivityAddApi(data).then(res => {
-            console.log(res)
-            this.addOrUpdateVisible = false
-            this.fetchData()
-          }).catch(err => {
-            console.log('err', err)
-            this.loading = false
-          })
+          if (!this.form.id) {
+            ActivityAddApi(data).then(res => {
+              console.log(res)
+              this.addOrUpdateVisible = false
+              this.pagination.currentPage = 1
+              this.fetchData()
+            }).catch(err => {
+              console.log('err', err)
+              this.loading = false
+            })
+          } else {
+            ActivityEditApi(data).then(res => {
+              console.log(res)
+              this.addOrUpdateVisible = false
+              this.fetchData()
+            }).catch(err => {
+              console.log('err', err)
+              this.loading = false
+            })
+          }
         } else {
           console.log('还有必填信息没有填写')
           return false
@@ -589,8 +615,22 @@ export default {
       })
     },
     downloadExcel ({ index, row }) {
-      // let activityId = row.id
-      // window.location.href = ''
+      let activityId = row.id
+      window.location.href = 'https://weselfshop.cn/enroll-manager/manager/activity/activity/excel/enroll/' + activityId
+    },
+    removeActivity ({ index, row }, done) {
+      let activityId = row.id
+      ActivityRemoveApi(activityId)
+        .then(res => {
+          this.$message({
+            message: '删除成功',
+            type: 'success'
+          })
+          done()
+        }).catch(err => {
+          console.log('err', err)
+          this.loading = false
+        })
     }
   }
 }

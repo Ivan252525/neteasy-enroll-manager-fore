@@ -24,7 +24,7 @@
     </div>
     <!--  弹窗  -->
     <el-dialog :title="dialogTitle" :visible.sync="addOrUpdateVisible">
-      <el-form :model="form">
+      <el-form :model="form" label-position="top">
         <el-form-item label="商家名称：" label-width="200">
           <el-input v-model="form.businessName" autocomplete="off"></el-input>
         </el-form-item>
@@ -102,7 +102,7 @@ export default {
           {
             text: '修改',
             icon: 'el-icon-edit',
-            type: 'info',
+            type: 'primary',
             size: 'small',
             emit: 'custom-emit-1'
           }

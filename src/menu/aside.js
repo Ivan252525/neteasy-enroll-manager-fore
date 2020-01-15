@@ -14,5 +14,14 @@ export default [
     children: [
       { path: '/activityList', title: '活动列表' }
     ]
+  },
+  {
+    title: '首页管理',
+    icon: 'folder-o',
+    children: [
+      { path: '/indexBannerManager', title: 'banner管理' },
+      { path: '/indexActivityManager', title: '首页活动管理' },
+      { path: '/indexBusinessManager', title: '首页商家管理' }
+    ]
   }
 ]
