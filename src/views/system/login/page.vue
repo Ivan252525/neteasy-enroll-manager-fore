@@ -58,40 +58,40 @@
                 </el-button>
               </el-form>
             </el-card>
-            <p
-              class="page-login--options"
-              flex="main:justify cross:center">
-              <span><d2-icon name="question-circle"/> 忘记密码</span>
-              <span>注册用户</span>
-            </p>
-            <!-- quick login -->
-            <el-button class="page-login--quick" size="default" type="info" @click="dialogVisible = true">
-              快速选择用户（测试功能）
-            </el-button>
+<!--            <p-->
+<!--              class="page-login&#45;&#45;options"-->
+<!--              flex="main:justify cross:center">-->
+<!--              <span><d2-icon name="question-circle"/> 忘记密码</span>-->
+<!--              <span>注册用户</span>-->
+<!--            </p>-->
+<!--            &lt;!&ndash; quick login &ndash;&gt;-->
+<!--            <el-button class="page-login&#45;&#45;quick" size="default" type="info" @click="dialogVisible = true">-->
+<!--              快速选择用户（测试功能）-->
+<!--            </el-button>-->
           </div>
         </div>
         <div class="page-login--content-footer">
           <p class="page-login--content-footer-locales">
-            <a
-              v-for="language in $languages"
-              :key="language.value"
-              @click="onChangeLocale(language.value)">
-              {{ language.label }}
-            </a>
+<!--            <a-->
+<!--              v-for="language in $languages"-->
+<!--              :key="language.value"-->
+<!--              @click="onChangeLocale(language.value)">-->
+<!--              {{ language.label }}-->
+<!--            </a>-->
           </p>
-          <p class="page-login--content-footer-copyright">
-            Copyright
-            <d2-icon name="copyright"/>
-            2018 D2 Projects 开源组织出品
-            <a href="https://github.com/FairyEver">
-              @FairyEver
-            </a>
-          </p>
-          <p class="page-login--content-footer-options">
-            <a href="#">帮助</a>
-            <a href="#">隐私</a>
-            <a href="#">条款</a>
-          </p>
+<!--          <p class="page-login&#45;&#45;content-footer-copyright">-->
+<!--            Copyright-->
+<!--            <d2-icon name="copyright"/>-->
+<!--            2018 D2 Projects 开源组织出品-->
+<!--            <a href="https://github.com/FairyEver">-->
+<!--              @FairyEver-->
+<!--            </a>-->
+<!--          </p>-->
+<!--          <p class="page-login&#45;&#45;content-footer-options">-->
+<!--            <a href="#">帮助</a>-->
+<!--            <a href="#">隐私</a>-->
+<!--            <a href="#">条款</a>-->
+<!--          </p>-->
         </div>
       </div>
     </div>
@@ -115,8 +115,6 @@
 import dayjs from 'dayjs'
 import { mapActions } from 'vuex'
 import localeMixin from '@/locales/mixin.js'
-import { AccountLogin } from '@/api/sys.login.js'
-import util from '@/libs/util'
 export default {
   mixins: [
     localeMixin
@@ -210,14 +208,22 @@ export default {
           // 登录
           // 注意 这里的演示没有传验证码
           // 具体需要传递的数据请自行修改代码
-          AccountLogin({
+          // AccountLogin({
+          //   username: this.formLogin.username,
+          //   password: this.formLogin.password
+          // })
+          //   .then((data) => {
+          //     console.log(data)
+          //     let token = data.token
+          //     util.cookies.set('token', token)
+          //     // 重定向对象不存在则返回顶层路径
+          //     this.$router.replace(this.$route.query.redirect || '/')
+          //   })
+          this.login({
             username: this.formLogin.username,
             password: this.formLogin.password
           })
-            .then((data) => {
-              console.log(data)
-              let token = data.token
-              util.cookies.set('token', token)
+            .then(() => {
               // 重定向对象不存在则返回顶层路径
               this.$router.replace(this.$route.query.redirect || '/')
             })
