@@ -111,12 +111,24 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="活动地址（可不填）：">
+        <el-form-item label="活动地址：">
           <el-col span="11">
             <el-input v-model="form.address"/>
           </el-col>
         </el-form-item>
-        <el-form-item label="活动联系电话（可不填）：">
+        <div>
+          <el-form-item label="活动地址经纬度（可使用百度地图定位工具获取 http://api.map.baidu.com/lbsapi/getpoint/index.html）">
+            <el-row>
+              <el-col span="8">
+                <el-input v-model="form.positionLongitude" placeholder="请输入经度"/>
+              </el-col>
+              <el-col span="8" style="margin-left: 20px">
+                <el-input v-model="form.positionLatitude" placeholder="请输入纬度"/>
+              </el-col>
+            </el-row>
+          </el-form-item>
+        </div>
+        <el-form-item label="活动联系电话：">
           <el-col span="11">
             <el-input v-model="form.phone"/>
           </el-col>
@@ -170,7 +182,7 @@
                 <el-input v-model="formItem.options" :disabled="formItem.type === 1 || !canEditFormItem"/>
               </el-form-item>
             </el-col>
-            <el-col span="2"  style="margin-left: 15px">
+            <el-col span="2" style="margin-left: 15px">
               <el-form-item label="-">
                 <el-button @click="removeFormItems(index)" :disabled="!canEditFormItem">删除</el-button>
               </el-form-item>
@@ -193,6 +205,7 @@ import { BusinessAllApi } from '@/api/business.js'
 import ActivityMainImage from './components/ActivityMainImage'
 import ActivityState from './components/ActivityState'
 import util from '@/libs/util'
+
 export default {
   name: 'activityList',
   data () {
@@ -208,9 +221,10 @@ export default {
         enrollTime: [],
         jmRegionId: null,
         address: '',
+        positionLatitude: '',
+        positionLongitude: '',
         phone: '',
-        detailImage: [
-        ],
+        detailImage: [],
         formItems: [
           {
             must: true,
@@ -435,9 +449,10 @@ export default {
         enrollTime: [],
         jmRegionId: null,
         address: '',
+        positionLatitude: '',
+        positionLongitude: '',
         phone: '',
-        detailImage: [
-        ],
+        detailImage: [],
         formItems: [
           {
             must: true,
@@ -545,6 +560,8 @@ export default {
             enrollEndTime: this.dateFormat(this.form.enrollTime[1]),
             jmRegionId: this.form.jmRegionId,
             address: this.form.address ? this.form.address : null,
+            positionLatitude: this.form.positionLatitude ? this.form.positionLatitude : null,
+            positionLongitude: this.form.positionLongitude ? this.form.positionLongitude : null,
             phone: this.form.phone ? this.form.phone : null,
             detailImage: detailImage,
             formItems: formItems
@@ -642,15 +659,17 @@ export default {
   }
 
   .main-image-avatar-uploader .el-upload {
-     border: 1px dashed #d9d9d9;
-     border-radius: 6px;
-     cursor: pointer;
-     position: relative;
-     overflow: hidden;
-   }
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
   .main-image-avatar-uploader .el-upload:hover {
     border-color: #409EFF;
   }
+
   .main-image-avatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
@@ -659,6 +678,7 @@ export default {
     line-height: 100px;
     text-align: center;
   }
+
   .main-image-avatar {
     width: 172.5px;
     height: 100px;
@@ -672,9 +692,11 @@ export default {
     position: relative;
     overflow: hidden;
   }
+
   .banner-avatar-uploader .el-upload:hover {
     border-color: #409EFF;
   }
+
   .banner-avatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
@@ -683,6 +705,7 @@ export default {
     line-height: 100px;
     text-align: center;
   }
+
   .banner-avatar {
     width: 187.5px;
     height: 100px;
