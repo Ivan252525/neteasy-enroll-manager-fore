@@ -93,6 +93,16 @@ const frameIn = [
         },
         component: _import('activity/activityList')
       },
+      // 活动列表
+      {
+        path: 'checkUser',
+        name: 'checkUser',
+        meta: {
+          title: '活动核销人列表',
+          auth: true
+        },
+        component: _import('activity/check/checkUser')
+      },
       // 首页管理
       {
         path: 'indexBannerManager',

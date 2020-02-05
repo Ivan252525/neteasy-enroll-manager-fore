@@ -37,6 +37,7 @@
         :rowHandle="rowHandle"
         @custom-emit-1="showEditActivity"
         @custom-emit-2="downloadExcel"
+        @custom-emit-3="toCheckUserList"
         @row-remove="removeActivity"
         @pagination-current-change="paginationCurrentChange"/>
     </div>
@@ -322,6 +323,13 @@ export default {
             disabled: function (index, row) {
               return row.enrollNum === 0
             }
+          },
+          {
+            text: '核销人',
+            // icon: 'el-icon-edit',
+            type: 'primary',
+            size: 'mini',
+            emit: 'custom-emit-3'
           }
         ],
         remove: {
@@ -648,6 +656,11 @@ export default {
           console.log('err', err)
           this.loading = false
         })
+    },
+    toCheckUserList ({ index, row }) {
+      let activityId = row.id
+      let title = row.title
+      this.$router.push({ path: '/checkUser', query: { activityId: activityId, title: title } })
     }
   }
 }
